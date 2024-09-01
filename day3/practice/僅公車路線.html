@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>公車路線地圖</title>
+    <!-- 引入 Leaflet 的 CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+      #map {
+        height: 600px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>公車路線地圖</h1>
+    <div id="map"></div>
+
+    <!-- 引入 Leaflet 的 JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      // 初始化地圖，並設定中心點及縮放層級
+      var map = L.map("map").setView([24.13795, 120.67793], 12);
+
+      // 加入 OSM 地圖圖層
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap",
+      }).addTo(map);
+
+      // 公車路線的 GeoJSON 資料
+      var busRoute = {
+        type: "LineString",
+        coordinates: getBusLine(),
+      };
+
+      // 將公車路線添加到地圖上
+      L.geoJSON(busRoute, {
+        style: function (feature) {
+          return { color: "blue", weight: 5 };
+        },
+      }).addTo(map);
+
+      function getBusLine() {
+        var input = {
+          RouteUID: "TXG35",
+          RouteID: "35",
+          RouteName: {
+            Zh_tw: "35",
+            En: "35",
+          },
+          SubRouteUID: "TXG35",
+          SubRouteID: "35",
+          SubRouteName: {
+            Zh_tw: "35",
+            En: "35",
+          },
+          Direction: 0,
+          Geometry:
+            "LINESTRING(120.66358 24.11693,120.66049 24.11693,120.66047 24.11323,120.66182 24.11321,120.66387 24.11357,120.66566 24.11394,120.66807 24.11444,120.66945 24.11472,120.66988 24.11478,120.67007 24.11479,120.67008 24.11518,120.67007 24.11636,120.67007 24.11787,120.67007 24.11906,120.67007 24.11973,120.67007 24.12061,120.67008 24.12147,120.67007 24.12235,120.67008 24.12344,120.67008 24.12463,120.67008 24.12594,120.67019 24.12613,120.67048 24.12634,120.67168 24.12636,120.67284 24.12636,120.67515 24.12637,120.67515 24.12532,120.67514 24.12413,120.67774 24.12407,120.67927 24.12393,120.67928 24.12316,120.67928 24.12237,120.68423 24.12236,120.68417 24.12385,120.68423 24.12588,120.68423 24.12620,120.68419 24.12639,120.68465 24.12806,120.68513 24.12984,120.68513 24.13002,120.68475 24.13082,120.68432 24.13166,120.68371 24.13284,120.68314 24.13404,120.68273 24.13490,120.68228 24.13579,120.68248 24.13594,120.68408 24.13662,120.68419 24.13669,120.68434 24.13693,120.68445 24.13718,120.68499 24.13765,120.68570 24.13758,120.68613 24.13763,120.68695 24.13809,120.68774 24.13811,120.68776 24.13886,120.68782 24.14013,120.68597 24.14017,120.68594 24.14154,120.68591 24.14315,120.68591 24.14345,120.68625 24.14446,120.68647 24.14518,120.68648 24.14542,120.68647 24.14557,120.68641 24.14578,120.68622 24.14609,120.68598 24.14618,120.68407 24.14625,120.68356 24.14611,120.68322 24.14594,120.68301 24.14582,120.68269 24.14587,120.68254 24.14600,120.68293 24.14701,120.68341 24.14833,120.68614 24.15469,120.68586 24.15464,120.68570 24.15458,120.68433 24.15402,120.68261 24.15339,120.68165 24.15541,120.68144 24.15604,120.68104 24.15774,120.68094 24.15815,120.68092 24.15914,120.67793 24.15919,120.67625 24.15920,120.67576 24.15923,120.67381 24.15924,120.67047 24.15922,120.66910 24.15923,120.66725 24.15923,120.66624 24.15922,120.66453 24.16154,120.66325 24.16332,120.66320 24.16339,120.66303 24.16346,120.65949 24.16448,120.65754 24.16506,120.65562 24.16563,120.65402 24.16610,120.65133 24.16686,120.65041 24.16717,120.65019 24.16727,120.64997 24.16745,120.64887 24.16865,120.64785 24.16980,120.64473 24.17324,120.64459 24.17356,120.64435 24.17452,120.64412 24.17550,120.64408 24.17579,120.64366 24.17625,120.64231 24.17776,120.64336 24.17841,120.64400 24.17867,120.64439 24.17876,120.64507 24.17884,120.64499 24.18183,120.64477 24.18361,120.64425 24.18722,120.64049 24.18728,120.63990 24.18500,120.64171 24.18506)",
+          EncodedPolyline:
+            "yierCkbn_V?hRbVBBmGgAyKiAeJcBaNw@sGKuAAe@mAAkF@mH?mF?eC?oD?kDAoD@yEAmF?eG?e@Ui@y@CoF?gFAmMpE?lF@JgOZqHxCA|C?@}]iHJuKK_A?e@FmI{AcJ_Bc@?_DjAgDtAkFxBoFpBkDpAqDxA]g@gC_IMUo@]q@U}AkBLmCIuA{AcDC}CuCC}FKGpJqGDaID{@?iEcAoCk@o@A]@i@J}@d@Qn@M|JZdB`@bAVh@I~@Y\\iEmAgG_Bwf@aPHv@J^nBpG|BvIsK~D}Bh@sInAqAReEBItQAnIE`BAdKBzSApG?pJ@hEoMtIcJ~FMHM`@kEbUsBdKqB~J}A~HwCxO}@vDSj@c@j@oFzEeFjEoTnR_AZ_En@cEl@y@F{ArAmHlGaCqEs@_CQmAOgCuQNcJj@qUfBKnVfMtBKiJ",
+          UpdateTime: "2024-08-31T05:36:09+08:00",
+          VersionID: 0,
+        };
+
+        var output = parseLineString(input.Geometry);
+        return output;
+      }
+
+      function parseLineString(lineString) {
+        // 移除 "LINESTRING(" 和 ")" 並分割座標對
+        const coordinatesString = lineString
+          .replace("LINESTRING(", "")
+          .replace(")", "");
+        const coordinatesArray = coordinatesString.split(",");
+
+        // 將每個座標對分割為經度和緯度，並轉換為 [經度, 緯度] 格式
+        const coordinates = coordinatesArray.map((coord) => {
+          const [lng, lat] = coord.trim().split(" ").map(Number);
+          return [lng, lat];
+        });
+
+        return coordinates;
+      }
+    </script>
+  </body>
+</html>

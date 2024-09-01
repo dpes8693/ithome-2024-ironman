@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Route Map Example</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <style>
+      body {
+        background-color: black;
+        padding: 0;
+        margin: 0;
+      }
+      .wrapper {
+        width: 99dvw;
+        height: 99dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="map"></div>
+    </div>
+
+    <!-- 引入站牌資料(stopData)&路線資料(routeData) -->
+    <script src="./stopData.js"></script>
+    <script src="./routeData.js"></script>
+    <script>
+      const myMap = {
+        map: null,
+        markers: [],
+        init() {
+          this.map = L.map("map").setView(
+            [24.153940200805668, 120.6743698120117],
+            14
+          );
+          //圖層
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "© OpenStreetMap contributors",
+          }).addTo(this.map);
+        },
+        generateBusStop() {
+          // 公車站牌資料
+          const busStops = stopData;
+          // 產生marker並添加到地圖
+          busStops.forEach((stop) => {
+            const marker = L.marker([
+              stop.StopPosition.PositionLat,
+              stop.StopPosition.PositionLon,
+            ]).addTo(this.map);
+            marker
+              .bindTooltip(stop.StopID, { permanent: true, direction: "top" })
+              .openTooltip();
+            this.markers.push({ marker, stop });
+          });
+        },
+        generateBusRoute() {
+          // 公車路線
+          const busRoute = {
+            type: "LineString",
+            coordinates: parseLineString(routeData.Geometry),
+          };
+          L.geoJSON(busRoute, {
+            style: function (feature) {
+              return { color: "blue", weight: 5 };
+            },
+          }).addTo(this.map);
+        },
+
+        main() {
+          // 產生路線
+          this.generateBusRoute();
+          // 產生站牌
+          this.generateBusStop();
+
+          // 更新標記的顯示內容
+          const updateMarkers = () => {
+            const zoomThreshold = 15;
+            const currentZoom = this.map.getZoom();
+            this.markers.forEach(({ marker, stop }, index) => {
+              const labelText =
+                currentZoom >= zoomThreshold
+                  ? `${index + 1}_${stop.StopName.Zh_tw}`
+                  : `${index + 1}`;
+              marker.setTooltipContent(labelText);
+            });
+          };
+          // 初始化更新marker內容
+          updateMarkers();
+          // 當地圖縮放變化時更新marker
+          this.map.on("zoomend", updateMarkers);
+        },
+      };
+
+      myMap.init();
+      myMap.main();
+
+      function parseLineString(lineString) {
+        // 移除 "LINESTRING(" 和 ")" 並分割座標對
+        const coordinatesString = lineString
+          .replace("LINESTRING(", "")
+          .replace(")", "");
+        const coordinatesArray = coordinatesString.split(",");
+
+        // 將每個座標分割為經度和緯度，並轉換為 [經度, 緯度] 格式
+        const coordinates = coordinatesArray.map((coord) => {
+          const [lng, lat] = coord.trim().split(" ").map(Number);
+          return [lng, lat];
+        });
+
+        return coordinates;
+      }
+    </script>
+  </body>
+</html>

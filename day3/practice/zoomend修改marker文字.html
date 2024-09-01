@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Stops Map</title>
+    <!-- 引入 Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+    <!-- 設置地圖的樣式 -->
+    <style>
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Bus Stops Map</h2>
+    <div id="map"></div>
+
+    <!-- 引入 Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script>
+      // 初始化地圖，設置中心點和縮放級別
+      const map = L.map("map").setView([24.11692, 120.663486], 15);
+
+      // 設置 OpenStreetMap 作為底圖
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // 公車站牌資料
+      const busStops = [
+        {
+          StopUID: "TXG2822",
+          StopID: "2822",
+          StopName: {
+            Zh_tw: "南區公所",
+            En: "South District Office",
+          },
+          StopBoarding: 0,
+          StopSequence: 1,
+          StopPosition: {
+            PositionLon: 120.663486,
+            PositionLat: 24.11692,
+            GeoHash: "wsmc1y27p",
+          },
+          StationID: "5747",
+          StationGroupID: "0181",
+          LocationCityCode: "TXG",
+        },
+        {
+          StopUID: "TXG13948",
+          StopID: "13948",
+          StopName: {
+            Zh_tw: "臺中高工(工學六街)",
+            En: "Taichung Industrial H. S.(Gongxue 6th Street)",
+          },
+          StopBoarding: 0,
+          StopSequence: 2,
+          StopPosition: {
+            PositionLon: 120.660396,
+            PositionLat: 24.116469,
+            GeoHash: "wsmc1wq0x",
+          },
+          StationID: "3601",
+          StationGroupID: "5474",
+          LocationCityCode: "TXG",
+        },
+      ];
+
+      // 設置顯示站牌名稱的縮放級別門檻
+      const zoomThreshold = 16;
+
+      // 初始化標記對象的集合
+      const markers = [];
+
+      // 創建標記並添加到地圖
+      busStops.forEach((stop) => {
+        const marker = L.marker([
+          stop.StopPosition.PositionLat,
+          stop.StopPosition.PositionLon,
+        ]).addTo(map);
+        marker
+          .bindTooltip(stop.StopID, { permanent: true, direction: "top" })
+          .openTooltip();
+        markers.push({ marker, stop });
+      });
+
+      // 更新標記的顯示內容
+      function updateMarkers() {
+        const currentZoom = map.getZoom();
+        markers.forEach(({ marker, stop }) => {
+          const labelText =
+            currentZoom >= zoomThreshold ? stop.StopName.Zh_tw : stop.StopID;
+          marker.setTooltipContent(labelText);
+        });
+      }
+
+      // 初始更新標記內容
+      updateMarkers();
+
+      // 當地圖縮放級別變化時更新標記
+      map.on("zoomend", updateMarkers);
+    </script>
+  </body>
+</html>
