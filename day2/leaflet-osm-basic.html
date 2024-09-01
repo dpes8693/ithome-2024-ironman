@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>leaflet + OSM 製作免費線上地圖</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <style>
+      body {
+        background-color: black;
+        padding: 0;
+        margin: 0;
+      }
+      .wrapper {
+        width: 99dvw;
+        height: 99dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 給地圖一個高 -->
+    <div class="wrapper">
+      <div id="map"></div>
+    </div>
+    <script>
+      const myMap = {
+        map: null,
+        init() {
+          this.map = L.map("map").setView([25.033, 121.5654], 14);
+          //圖層
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "© OpenStreetMap contributors",
+          }).addTo(this.map);
+        },
+        main() {
+          // 點
+          const taipei101 = L.latLng(25.0339, 121.5646);
+          const daAnPark = L.latLng(25.0327467, 121.5343);
+
+          const lineConfig = {
+            color: "red",
+            weight: 3,
+          };
+          // 生成一條線
+          const polyline = L.polyline([taipei101, daAnPark], lineConfig)
+            .addTo(this.map)
+            .bindPopup("大安森林公園~台北101");
+
+          // 生成地標
+          L.marker(taipei101).addTo(this.map).bindPopup("台北101");
+          L.marker(daAnPark).addTo(this.map).bindPopup("大安森林公園");
+        },
+      };
+
+      myMap.init();
+      myMap.main();
+    </script>
+  </body>
+</html>
