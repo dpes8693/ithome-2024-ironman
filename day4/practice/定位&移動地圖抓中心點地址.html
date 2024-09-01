@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaflet OSM with Center Marker and Geolocation</title>
+    <!-- 引入 Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+    <!-- 設置地圖的樣式 -->
+    <style>
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+      .leaflet-control-locate {
+        background: white;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <!-- 引入 Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <!-- 引入 Leaflet Locate 控制器 JS -->
+    <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+
+    <script>
+      // 初始化地圖，設置中心點和縮放級別
+      const map = L.map("map").setView([25.033, 121.5654], 13);
+
+      // 設置 OpenStreetMap 作為底圖
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // 在地圖中心放置一個 marker
+      const centerMarker = L.marker(map.getCenter(), {
+        draggable: false,
+      }).addTo(map);
+
+      // 初始化 Tooltip 並綁定到 marker 上
+      centerMarker
+        .bindTooltip("Loading address...", {
+          permanent: true,
+          direction: "top",
+        })
+        .openTooltip();
+
+      // 更新 marker 的位置為地圖的中心
+      function updateMarker() {
+        const center = map.getCenter();
+        console.log(center);
+        centerMarker.setLatLng(center);
+        updateAddress(center);
+      }
+
+      // 更新地點的地址信息
+      //   https://nominatim.openstreetmap.org/ui/reverse.html?lat=24.15060&lon=120.68052&zoom=18
+      function updateAddress(latlng) {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`;
+
+        const parseAddressName = (addressObject) => {
+          const { house_number, road, neighbourhood, suburb, village, city } =
+            addressObject;
+          const cityName = `${city || ""}`;
+          const villageName = `${village || ""}`;
+          const address = `${village || ""}${suburb || ""}${
+            neighbourhood || ""
+          }${road || ""}${house_number || ""}`;
+          return `${cityName}${villageName}${address}` || "No address found";
+        };
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            const fullAddress = parseAddressName(data?.address);
+            centerMarker.setTooltipContent(fullAddress);
+          })
+          .catch((err) => {
+            console.log(err);
+            centerMarker.setTooltipContent("Unable to load address");
+          });
+      }
+
+      // 當地圖拖動結束時更新 marker 位置和地址
+      map.on("movestart", () => {
+        centerMarker.setTooltipContent(" ");
+      });
+      map.on("moveend", updateMarker);
+      map.on("move", () => {
+        const center = map.getCenter();
+        centerMarker.setLatLng(center);
+      });
+
+      // 添加定位當前位置的按鈕
+      L.control
+        .locate({
+          position: "topright",
+          keepCurrentZoomLevel: true,
+          drawCircle: false,
+          drawMarker: false,
+          setView: "untilPanOrZoom",
+          flyTo: true,
+          icon: "leaflet-control-locate-icon",
+          strings: {
+            title: "Show me where I am",
+            popup: "You are within {distance} {unit} from this point",
+          },
+        })
+        .addTo(map);
+
+      // 初次載入地圖時更新一次 marker 位置和地址
+      updateMarker();
+    </script>
+  </body>
+</html>

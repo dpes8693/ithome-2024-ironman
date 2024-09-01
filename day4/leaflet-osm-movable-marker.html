@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DAY-4 移動地標抓地址 Example</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <style>
+      body {
+        background-color: black;
+        padding: 0;
+        margin: 0;
+      }
+      .wrapper {
+        width: 99dvw;
+        height: 99dvh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="map"></div>
+    </div>
+
+    <script>
+      const myMap = {
+        map: null,
+        centerMarker: null,
+        init() {
+          this.map = L.map("map").setView(
+            [24.153940200805668, 120.6743698120117],
+            14
+          );
+          //圖層
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "© OpenStreetMap contributors",
+          }).addTo(this.map);
+        },
+        generateMarker() {
+          const map = this.map;
+          // 在地圖中心放一個可移動的 marker
+          this.centerMarker = L.marker(map.getCenter(), {
+            draggable: true,
+          }).addTo(map);
+
+          // 初始化 Tooltip
+          this.centerMarker
+            .bindTooltip("Loading address...", {
+              permanent: true,
+              direction: "top",
+            })
+            .openTooltip();
+        },
+        main() {
+          // 產生marker
+          this.generateMarker();
+
+          // 更新 marker 的位置和地址
+          const updateMarker = () => {
+            const latlng = this.centerMarker.getLatLng();
+            updateAddress(latlng, this.centerMarker);
+          };
+
+          // 初次載入地圖時更新一次 marker 位置和地址
+          updateMarker();
+
+          // 當 marker 被拖動後更新地址
+          this.centerMarker.on("dragend", updateMarker);
+        },
+      };
+
+      myMap.init();
+      myMap.main();
+
+      // call api 更新地點的地址
+      function updateAddress({ lat, lng }, centerMarker) {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            const address = data.display_name || "No address found";
+            const reverseAddress = address.split(",").reverse().join("");
+            centerMarker.setTooltipContent(reverseAddress);
+          })
+          .catch(() => {
+            centerMarker.setTooltipContent("Unable to load address");
+          });
+      }
+    </script>
+  </body>
+</html>

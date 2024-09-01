@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movable Marker</title>
+    <!-- 引入 Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+    <!-- 設置地圖的樣式 -->
+    <style>
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+      .leaflet-control-custom {
+        background-color: white;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <!-- 引入 Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+    <script>
+      // 初始化地圖，設置中心點和縮放級別
+      const map = L.map("map").setView([25.033, 121.5654], 13);
+
+      // 設置 OpenStreetMap 作為底圖
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // 在地圖中心放置一個可移動的 marker
+      const centerMarker = L.marker(map.getCenter(), {
+        draggable: false,
+      }).addTo(map);
+
+      // 初始化 Tooltip 並綁定到 marker 上
+      centerMarker
+        .bindTooltip("Loading address...", {
+          permanent: true,
+          direction: "top",
+        })
+        .openTooltip();
+
+      // 更新地點的地址信息
+      function updateAddress(latlng) {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`;
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            const address = data.display_name || "No address found";
+            centerMarker.setTooltipContent(address);
+          })
+          .catch(() => {
+            centerMarker.setTooltipContent("Unable to load address");
+          });
+      }
+
+      // 更新 marker 的位置和地址
+      function updateMarker() {
+        const latlng = centerMarker.getLatLng();
+        updateAddress(latlng);
+      }
+
+      // 初次載入地圖時更新一次 marker 位置和地址
+      updateMarker();
+
+      // 當 marker 被拖動後更新地址
+      // centerMarker.on("dragend", updateMarker);
+
+      // 自訂控制器，點擊時顯示 marker 的經緯度
+      const customControl = L.Control.extend({
+        options: {
+          position: "topright",
+        },
+        onAdd: function (map) {
+          const container = L.DomUtil.create("div", "leaflet-control-custom");
+          container.textContent = "顯示經緯度";
+          container.onclick = function () {
+            const latlng = centerMarker.getLatLng();
+            alert(`Latitude: ${latlng.lat}\nLongitude: ${latlng.lng}`);
+          };
+          return container;
+        },
+      });
+
+      // 將自訂控制器加入地圖
+      map.addControl(new customControl());
+    </script>
+  </body>
+</html>
