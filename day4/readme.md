@@ -33,9 +33,11 @@ map.getCenter();
 可以到以下官網試試看:
 https://nominatim.openstreetmap.org/ui/reverse.html
 
-我們需要"address"的資訊
+我們可以用"address"或是"display_name"的資訊
+要特別注意"display_name"對我們來說是反向的
 
 ```js
+// "display_name": "210號, 五權一街, 大忠里, 西區, 田心, 臺中市, 403, 臺灣",
 // "address": {
 //     "house_number": "210號",
 //     "road": "五權一街",
@@ -96,9 +98,20 @@ function updateAddress({ lat, lng }, centerMarker) {
 
 ## 成果
 
+其實最早我完成的是這個
+[demo2](https://dpes8693.github.io/ithome-2024-ironman/day4/leaflet-osm-movable-marker.html)
+手動移動 marker 來更新地圖
+但使用後發現不好用 XD
+
+1. user 不一定知道 marker 可以移動
+2. 當距離很遠時要操作很多次才能抓到想要的地址
+
+果然外送平台的做法 UX 還是比較讚!
+移動地圖抓中心點非常直覺~
+
+有興趣可以實際操作看看最後的成果:
+[demo1](https://dpes8693.github.io/ithome-2024-ironman/day4/leaflet-osm-move-map-get-address.html)
+
 ![demo1](https://drive.google.com/thumbnail?id=1btccPyE_BNn6_nVlsQiWUkMbnksGLUv_&sz=w1366)
 
-[demo1](https://dpes8693.github.io/ithome-2024-ironman/day4/leaflet-osm-move-map-get-address.html)
-[demo2](https://dpes8693.github.io/ithome-2024-ironman/day4/leaflet-osm-movable-marker.html)
-
-## 程式碼
+## 完成後的程式碼
