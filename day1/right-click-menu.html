@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DAY-1 PM說: 網頁要怎麼客製化右鍵選單(menu)?</title>
+    <style>
+      #custom-menu {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        padding: 5px;
+      }
+      #custom-menu div {
+        padding: 5px;
+        cursor: pointer;
+      }
+      #custom-menu div:hover {
+        background-color: #e9e9e9;
+      }
+      img {
+        margin: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>右鍵召喚我的分身</h1>
+    <img
+      src="https://fakeimg.pl/600x270/?text=%E5%8F%B3%E9%8D%B5%E5%8F%AC%E5%96%9A%E6%88%91%E7%9A%84%E5%88%86%E8%BA%AB&font=noto"
+      alt="Example image"
+    />
+    <div id="custom-menu">
+      <div id="copy-option">召喚</div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const customMenu = document.getElementById("custom-menu");
+        const copyOption = document.getElementById("copy-option");
+        let targetElement = null;
+        // 顯示自定義選單
+        document.addEventListener("contextmenu", (e) => {
+          if (e.target.tagName === "H1" || e.target.tagName === "IMG") {
+            e.preventDefault();
+            targetElement = e.target;
+            customMenu.style.display = "block";
+            customMenu.style.left = e.pageX + "px";
+            customMenu.style.top = e.pageY + "px";
+          }
+        });
+        // 隱藏自定義選單
+        document.addEventListener(
+          "click",
+          () => (customMenu.style.display = "none")
+        );
+        // 複製元素
+        copyOption.addEventListener("click", () => {
+          if (targetElement) {
+            const deep = true;
+            // 這邊透過 cloneNode 複製，參數deep控制是否巢狀複製
+            // 要注意如果有用到 id, name 屬性要修改避免重複
+            const newElement = targetElement.cloneNode(deep);
+            targetElement.parentNode.insertBefore(
+              newElement,
+              targetElement.nextSibling
+            );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
