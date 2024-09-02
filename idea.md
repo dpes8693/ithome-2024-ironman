@@ -21,9 +21,9 @@
 
 1. 地圖 leaflet OSM 基礎📗
 2. 地圖 leaflet OSM 路線 (台中等公車)📗🔥
-3. 地圖 leaflet OSM (foodpanda 定位)🔥
+3. 地圖 leaflet OSM (foodpanda 定位)📗🔥
 4. 圖表 (echart, chartjs)
-   雷達圖 反向
+   雷達圖 反向📗
    長條圖+折線圖
 
 5. 監聽手機滑動方向 (ios 手機滑動 刪除)
