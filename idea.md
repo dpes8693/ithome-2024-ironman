@@ -48,7 +48,7 @@
 
 18. pictureMap 台灣地圖 🔥
 19. 預覽 PDF
-20. 彈出小視窗
+20. 彈出小視窗 📗
 21. 機上盒網頁製作
 22. open App by schema
 23. iframe
