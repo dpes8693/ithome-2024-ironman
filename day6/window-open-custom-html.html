@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrap 5 Table with Custom Window</title>
+    <script src="index.js"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h2>Bootstrap 5 Table with Custom Window</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Price</th>
+            <!-- <th>Stock</th>
+          <th>Date Added</th> -->
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Item 1</td>
+            <td>Description of Item 1</td>
+            <td>Category A</td>
+            <td>$100</td>
+            <!-- <td>50</td>
+          <td>2024-09-01</td> -->
+            <td>
+              <button
+                class="btn btn-primary"
+                onclick="openNewWindow({
+                    name:'Item 1',
+                     description:'Description of Item 1',
+                     category:'Category A',
+                     price:'$100',
+                     stock:'50',
+                     dateAdded:'2024-09-01'
+                })"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Item 2</td>
+            <td>Description of Item 2</td>
+            <td>Category B</td>
+            <td>$200</td>
+            <!-- <td>30</td>
+          <td>2024-09-02</td> -->
+            <td>
+              <button
+                class="btn btn-primary"
+                onclick="openNewWindow({
+                    name:'Item 2',
+                     description:'Description of Item 2',
+                     category:'Category B',
+                     price:'$200',
+                     stock:'30',
+                     dateAdded:'2024-09-02'
+                })"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
