@@ -53,7 +53,7 @@
 22. open App by schema
 23. iframe
     iframe.contentWindow.scrollTo(0, 0);
-24. barcode 二唯碼(barcode 39)
+24. barcode 二唯碼(barcode 39)📗
 
 ===
 
