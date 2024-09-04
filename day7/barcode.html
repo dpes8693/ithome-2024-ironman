@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>條碼產生器</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+      body {
+        padding: 20px;
+      }
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      input,
+      select,
+      button {
+        margin: 10px 0;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <label for="barcodeType">選擇條碼種類:</label>
+      <select id="barcodeType">
+        <option value="EAN13">EAN-13</option>
+        <option value="CODE128">Code 128</option>
+        <option value="CODE39">Code 39</option>
+      </select>
+
+      <label for="textInput">輸入文字:</label>
+      <input
+        type="text"
+        id="textInput"
+        placeholder="輸入條碼文字"
+        value="9789576780004"
+      />
+
+      <button onclick="generateBarcode()">產生條碼</button>
+
+      <div id="wrapper">
+        <div>
+          <h2>svg</h2>
+          <svg id="barcode1"></svg>
+        </div>
+        <!-- or -->
+        <div>
+          <h2>canvas</h2>
+          <canvas id="barcode2"></canvas>
+        </div>
+        <!-- or -->
+        <div>
+          <h2>img</h2>
+          <img id="barcode3" src="" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      console.log("範例:", {
+        EAN13: "9789576780004", //ISBN
+        CODE128: "Example1234",
+        CODE39: "CODE39 Barcode",
+      });
+      document.getElementById("wrapper").style.display = "none";
+      function generateBarcode() {
+        const textInput = document.getElementById("textInput").value;
+        const barcodeType = document.getElementById("barcodeType").value;
+        if (textInput) {
+          JsBarcode("#barcode1", textInput, {
+            format: barcodeType,
+            displayValue: true,
+            height: 50,
+          });
+          JsBarcode("#barcode2", textInput, {
+            format: barcodeType,
+            displayValue: true,
+            height: 50,
+          });
+          JsBarcode("#barcode3", textInput, {
+            format: barcodeType,
+            displayValue: true,
+            height: 50,
+          });
+          document.getElementById("wrapper").style.display = "";
+        } else {
+          alert("請輸入條碼文字");
+        }
+      }
+    </script>
+  </body>
+</html>
