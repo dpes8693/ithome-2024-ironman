@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>web-life-cycle</title>
+  </head>
+  <body>
+    <h1>網頁生命週期 dmo</h1>
+    <pre>
+        請開啟檢查(F12)
+    </pre>
+
+    <h3>"離開網頁監聽"注意事項</h3>
+    <ol>
+      <li>要先和網頁互動過一次 才會提示(事件正確綁上去) ex: 鍵盤打字, 滑鼠點擊</li>
+      <li>試著關閉網頁，會跳出題示，alert內容無法更改(防詐騙政策)</li>
+    </ol>
+    <br />
+
+    <p>您的網頁以重開: <span id="closeWebCounter"></span> 次</p>
+
+    <script>
+      //2-2
+      window.addEventListener("load", function (event) {
+        console.log("All resources finished loading!", Date.now());
+      });
+
+      //1-2
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM Ready!", Date.now());
+      });
+
+      document.addEventListener("readystatechange", (e) => {
+        switch (document.readyState) {
+          case "interactive":
+            // 1-1
+            console.log("文件已經完成讀取。可以使用 DOM 元素。", Date.now());
+            break;
+          case "complete":
+            // 2-1
+            console.log("頁面已經完成讀取。", Date.now());
+            break;
+        }
+      });
+
+      //3
+      window.addEventListener("beforeunload", (event) => {
+        //不會觸發
+        alert("886");
+        event.returnValue = `Are you sure you want to leave?`; //以前可以改文字，現在不行了
+      });
+
+      //4
+      window.addEventListener("unload", (event) => {
+        const closeWebTimes = localStorage.getItem("已關閉網頁次數") || 0;
+        const newValue = Number(closeWebTimes) + 1;
+        localStorage.setItem("已關閉網頁次數", newValue);
+      });
+
+      //0
+      console.log(document.readyState, Date.now());
+      closeWebCounter.textContent = localStorage.getItem("已關閉網頁次數") || 0;
+    </script>
+  </body>
+</html>
