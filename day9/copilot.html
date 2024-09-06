@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- https://copilot.microsoft.com/sl/kK7M0PMdkSi -->
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>申請書</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+      }
+
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+
+      input[type="checkbox"] {
+        margin-right: 10px;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <h1>臺北市住宅汰換節能家電補助申請書</h1>
+      <p>(以下表格及欄位由申請人填寫)</p>
+      <label for="serial">申請序號:</label>
+      <input type="text" id="serial" name="serial" /><br />
+
+      <label for="name">姓名:</label>
+      <input type="text" id="name" name="name" /><br />
+
+      <label for="id">身份證字號:</label>
+      <input type="text" id="id" name="id" /><br />
+
+      <label for="phone">聯絡電話:</label>
+      <input type="text" id="phone" name="phone" /><br />
+
+      <label for="mobile">行動電話:</label>
+      <input type="text" id="mobile" name="mobile" /><br />
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" /><br />
+
+      <label for="address">通訊地址:</label>
+      <input type="text" id="address" name="address" /><br />
+
+      <label for="install_address">設備安裝使用地址:</label>
+      <input type="text" id="install_address" name="install_address" /><br />
+
+      <h2>自我檢核項目</h2>
+      <label for="check1">1. 臺北市住宅汰換節能家電補助申請書</label>
+      <input type="checkbox" id="check1" name="check1" /><br />
+
+      <label for="check2">2. 國民身分證或中華民國居留證正反面影本</label>
+      <input type="checkbox" id="check2" name="check2" /><br />
+
+      <label for="check3">3. 補助設備安裝地址證明文件</label>
+      <input type="checkbox" id="check3" name="check3" /><br />
+
+      <label for="check4">4. 載明產品型號之購買證明文件</label>
+      <input type="checkbox" id="check4" name="check4" /><br />
+
+      <label for="check5">5. 廠四機回收聯單第三線</label>
+      <input type="checkbox" id="check5" name="check5" /><br />
+
+      <label for="check6">6. 補助款領據、申請人金融機構存摺封面影本</label>
+      <input type="checkbox" id="check6" name="check6" /><br />
+
+      <h2>購買數量與價格</h2>
+      <label for="product1">冷氣/電冰箱:</label>
+      <input type="text" id="product1" name="product1" /><br />
+
+      <label for="quantity1">購買數量:</label>
+      <input type="number" id="quantity1" name="quantity1" /><br />
+
+      <label for="price1">購買價格(新臺幣 元):</label>
+      <input type="text" id="price1" name="price1" /><br />
+
+      <h2>切結事項</h2>
+      <label for="declaration1">1. 申請人確實居住於本市申請安装地址。</label>
+      <input type="checkbox" id="declaration1" name="declaration1" /><br />
+
+      <label for="declaration2"
+        >2.
+        依本計畫規定獲得補助後，如有違反本計畫規定事項，願繳回全部補助款。</label
+      >
+      <input type="checkbox" id="declaration2" name="declaration2" /><br />
+
+      <label for="declaration3"
+        >3. 若為公職人員，已主動於申請文件中據實表明身分關係。</label
+      >
+      <input type="checkbox" id="declaration3" name="declaration3" /><br />
+
+      <label for="declaration4">4. 已詳細閱讀並願遵守上述內容。</label>
+      <input type="checkbox" id="declaration4" name="declaration4" /><br />
+
+      <label for="date">日期:</label>
+      <input type="date" id="date" name="date" /><br />
+
+      <button type="submit">提交</button>
+    </form>
+  </body>
+</html>
