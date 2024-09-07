@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iframe scrollTo 失敗範例</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      iframe {
+        width: 88dvw;
+        height: 62dvh;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      pre {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>iframe scrollTo 失敗範例</h1>
+    <iframe id="myIframe" src="https://element-plus.org/zh-CN/"></iframe>
+    <button onclick="scrollIframeToTop()">滾動 iframe 到頂部</button>
+    <pre>
+      Uncaught SecurityError: Failed to read a named property 'scrollTo' from 'Window': 
+      Blocked a frame with origin "http://xxxxxxxx" from accessing a cross-origin frame.
+    </pre>
+
+    <script>
+      function scrollIframeToTop() {
+        const iframe = document.getElementById("myIframe");
+        iframe.contentWindow.scrollTo(0, 0);
+      }
+    </script>
+  </body>
+</html>

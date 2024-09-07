@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iframe scrollTo 成功範例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        iframe {
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>iframe scrollTo 成功範例</h1>
+    <iframe id="myIframe" srcdoc="
+        <html>
+            <body>
+                <h2>iframe 內容</h2>
+                <p>這是一些內容，請嘗試滾動。</p>
+                <p>...</p>
+                <p>...</p>
+                <p>...</p>
+                <p style='margin-top: 800px;'>這是頁面底部。</p>
+            </body>
+        </html>
+    "></iframe>
+    <button onclick="scrollIframeToTop()">滾動 iframe 到頂部</button>
+
+    <script>
+        function scrollIframeToTop() {
+            const iframe = document.getElementById('myIframe');
+            iframe.contentWindow.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
