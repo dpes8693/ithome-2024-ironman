@@ -24,11 +24,10 @@
 3. 地圖 leaflet OSM (foodpanda 定位)📗🔥
 4. 圖表 (echart, chartjs)
    雷達圖 反向 📗
-   長條圖+折線圖
 
 5. 監聽手機滑動方向 (ios 手機滑動 刪除)📱
 6. 網頁媒體撥放研究 瀏覽器會阻擋 mp3, mp4
-7. youtube-api 使用
+7. youtube-api 使用📗
 8. 前端列印 print🔥📗
 9. 網頁逾時監聽 🔥
    前景 背景? (ig 播放影片)
