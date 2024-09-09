@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .wrapper {
+        width: 80dvw;
+        height: 80dvh;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <span>一開始沒辦法播放，切換點2次就能播放了</span>
+    <button id="genMyFrame">切換</button>
+    <div class="wrapper">
+      <!-- 小知識: iframe 若一開始沒有src無法正常運作 -->
+      <iframe
+        src="./no-mute-autoplay.html"
+        frameborder="0"
+        id="getMyFrame"
+      ></iframe>
+    </div>
+    <script>
+      let isMute = false;
+      genMyFrame.addEventListener("click", () => {
+        getMyFrame.src =
+          isMute === true ? "./no-mute-autoplay.html" : "./mute-autoplay.html";
+        isMute = !isMute;
+      });
+    </script>
+  </body>
+</html>
