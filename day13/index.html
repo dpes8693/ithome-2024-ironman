@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vConsole 簡易demo</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script>
+      const vConsole = new VConsole({ theme: "dark" });
+
+      //日志
+      console.log("foo"); // 白底黑字
+      console.info("bar"); // 白底紫字
+      console.debug("oh"); // 白底黄字
+      console.warn("foo"); // 黄底黄字
+      console.error("bar"); // 红底红字
+
+      // 'foo' 輸出到 System 面板
+      console.log("[system]", "foo");
+
+      //   vConsole.destroy();
+    </script>
+  </body>
+</html>
