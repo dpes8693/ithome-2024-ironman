@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 iOS-style Swipe-to-Delete Demo</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .list-item {
+            position: relative;
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+        .list-item-content {
+            transition: transform 0.3s ease;
+        }
+        .delete-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            background-color: #ff3b30;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div v-for="(item, index) in items" :key="index" class="list-item" @touchstart="touchStart($event, index)" @touchmove="touchMove($event, index)" @touchend="touchEnd(index)">
+            <div class="list-item-content" :style="{ transform: `translateX(${item.offset}px)` }">
+                {{ item.text }}
+            </div>
+            <div class="delete-btn" :style="{ transform: `translateX(${80 + item.offset}px)` }" @click="deleteItem(index)">
+                Delete
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    items: [
+                        { text: 'Item 1', offset: 0 },
+                        { text: 'Item 2', offset: 0 },
+                        { text: 'Item 3', offset: 0 },
+                        { text: 'Item 4', offset: 0 },
+                        { text: 'Item 5', offset: 0 }
+                    ],
+                    startX: 0,
+                    currentX: 0
+                }
+            },
+            methods: {
+                touchStart(event, index) {
+                    this.startX = event.touches[0].clientX;
+                },
+                touchMove(event, index) {
+                    this.currentX = event.touches[0].clientX;
+                    let diffX = this.startX - this.currentX;
+                    if (diffX > 0 && diffX <= 80) {
+                        this.items[index].offset = -diffX;
+                    }
+                },
+                touchEnd(index) {
+                    let diffX = this.startX - this.currentX;
+                    if (diffX > 40) {
+                        this.items[index].offset = -80;
+                    } else {
+                        this.items[index].offset = 0;
+                    }
+                },
+                deleteItem(index) {
+                    this.items.splice(index, 1);
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
