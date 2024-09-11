@@ -90,7 +90,7 @@
           },
           touchMove(event, index) {
             this.currentX = event.touches[0].clientX;
-            let diffX = this.startX - this.currentX;
+            const diffX = this.startX - this.currentX;
             // 加上距離5來區分 tap and swipe
             if (diffX > 5 || diffX < -5) {
               this.isSwiping = true;
@@ -109,7 +109,7 @@
               return;
             }
 
-            let diffX = this.startX - this.currentX;
+            const diffX = this.startX - this.currentX;
             //當結束時移動距離大於40則觸發
             const finishOffset = diffX > 40 ? -80 : 0;
             this.items[index].offset = finishOffset;
