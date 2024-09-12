@@ -29,7 +29,7 @@
 6. 網頁媒體撥放研究 瀏覽器會阻擋 mp3, mp4📗
 7. youtube-api 使用📗
 8. 前端列印 print🔥📗
-9. 網頁逾時監聽 🔥
+9. 網頁逾時監聽 🔥📗
    前景 背景? (ig 播放影片)
 10. 在手機跑網頁監聽 api 📱📗
     v-console
