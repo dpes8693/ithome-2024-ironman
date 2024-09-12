@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>visibilitychange demo</title>
+  </head>
+  <body>
+    <audio
+      src="//samplelib.com/lib/preview/mp3/sample-15s.mp3"
+      controls=""
+      controlslist="nodownload"
+      id="myAudio"
+      loop
+    ></audio>
+    <script>
+      document.addEventListener("visibilitychange", () => {
+        // ["hidden", "visible"]
+        if (document.visibilityState === "hidden") {
+          myAudio.pause();
+        } else if (document.visibilityState === "visible") {
+          myAudio.play();
+        }
+        console.log("document.hidden:", document.hidden);
+      });
+    </script>
+  </body>
+</html>
