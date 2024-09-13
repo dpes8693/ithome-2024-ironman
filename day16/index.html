@@ -44,6 +44,14 @@
       打開 comgooglemaps://📱 http://maps.google.com/maps
     </button>
     <button
+      id="openGoogleMapApp2"
+      data-url="comgooglemapsurl://"
+      data-name="Google Maps"
+      data-website="http://maps.google.com/maps"
+    >
+      打開 comgooglemapsurl://📱 http://maps.google.com/maps
+    </button>
+    <button
       id="openIgApp1"
       data-url="instagram://app"
       data-name="instagram"
@@ -90,6 +98,7 @@
 
       openYouTubeApp1.addEventListener("click", main);
       openGoogleMapApp1.addEventListener("click", main);
+      openGoogleMapApp2.addEventListener("click", main);
       openIgApp1.addEventListener("click", main);
 
       function showMessage(text, isError = false) {
