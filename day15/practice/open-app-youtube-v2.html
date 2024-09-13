@@ -32,7 +32,8 @@
 
     <script>
         document.getElementById('openYouTubeApp').addEventListener('click', function() {
-            var youtubeAppUrl = 'youtube://';
+            var youtubeAppUrl = 'https://www.youtube.com/';
+            // var youtubeAppUrl = 'youtube://';
             var messageElement = document.getElementById('message');
             var appOpenedSuccessfully = false;
             
@@ -53,7 +54,7 @@
                     if (!appOpenedSuccessfully) {
                         showMessage('無法打開 YouTube 應用程序，正在重定向到網站...', true);
                         setTimeout(function() {
-                            window.location.href = 'https://www.youtube.com';
+                            window.location.href = youtubeAppUrl;
                         }, 3000);
                     }
                 }, 2000);
