@@ -39,9 +39,9 @@
       id="openGoogleMapApp1"
       data-url="comgooglemaps://"
       data-name="Google Maps"
-      data-website="https://www.google.com/maps"
+      data-website="http://maps.google.com/maps"
     >
-      打開 comgooglemaps://📱 https://www.google.com/maps
+      打開 comgooglemaps://📱 http://maps.google.com/maps
     </button>
     <button
       id="openIgApp1"
@@ -59,6 +59,7 @@
       const main = (e) => {
         const appUrl = e.target.dataset.url;
         const appName = e.target.dataset.name;
+        const appWebsite = e.target.dataset.website;
         let appOpenedSuccessfully = false;
 
         // 添加一個事件監聽器來檢測頁面是否變為不可見（表示應用程序已打開）
@@ -78,7 +79,7 @@
           setTimeout(() => {
             if (!appOpenedSuccessfully) {
               showMessage(`無法打開 ${appName} App 3秒後跳轉...`, true);
-              setTimeout(() => jump("https://www.youtube.com/"), 3000);
+              setTimeout(() => jump(appWebsite), 3000);
             }
           }, 2000);
         } catch (error) {
