@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>打開 YouTube 應用程序</title>
+    <title>打開 App</title>
     <style>
       body {
         display: flex;
@@ -27,49 +27,69 @@
   </head>
   <body>
     <h3>試著用不同的手機瀏覽點按鈕，嘗試開啟App</h3>
-    <button id="openYouTubeApp1" data-url="youtube://">打開 youtube://</button>
-    <button id="openYouTubeApp2" data-url="https://www.youtube.com/">
-      打開 https://www.youtube.com/
+    <button
+      id="openYouTubeApp1"
+      data-url="youtube://"
+      data-name="YouTube"
+      data-website="https://www.youtube.com/"
+    >
+      打開 youtube://📱 https://www.youtube.com/
+    </button>
+    <button
+      id="openGoogleMapApp1"
+      data-url="comgooglemaps://"
+      data-name="Google Maps"
+      data-website="https://www.google.com/maps"
+    >
+      打開 comgooglemaps://📱 https://www.google.com/maps
+    </button>
+    <button
+      id="openIgApp1"
+      data-url="instagram://app"
+      data-name="instagram"
+      data-website="https://www.instagram.com/"
+    >
+      打開 instagram://app📱 https://www.instagram.com/
     </button>
     <div id="message"></div>
 
     <script>
-      const openApp1 = document.getElementById("openYouTubeApp1");
-      const openApp2 = document.getElementById("openYouTubeApp2");
       const messageElement = document.getElementById("message");
 
       const main = (e) => {
-        const youtubeAppUrl = e.target.dataset.url;
+        const appUrl = e.target.dataset.url;
+        const appName = e.target.dataset.name;
         let appOpenedSuccessfully = false;
 
         // 添加一個事件監聽器來檢測頁面是否變為不可見（表示應用程序已打開）
         document.addEventListener("visibilitychange", () => {
           if (document.hidden) {
             appOpenedSuccessfully = true;
-            showMessage("YouTube 應用程序已成功打開！");
+            showMessage(`${appName} 應用程序已成功打開！`);
           }
         });
 
         // openYouTube
         try {
-          showMessage("嘗試打開 YouTube App ...");
-          jump(youtubeAppUrl);
+          showMessage(`嘗試打開 ${appName} App ...`);
+          jump(appUrl);
 
           // 2秒後檢查
           setTimeout(() => {
             if (!appOpenedSuccessfully) {
-              showMessage("無法打開 YouTube App 3秒後跳轉...", true);
+              showMessage(`無法打開 ${appName} App 3秒後跳轉...`, true);
               setTimeout(() => jump("https://www.youtube.com/"), 3000);
             }
           }, 2000);
         } catch (error) {
           console.error("發生錯誤:", error);
-          showMessage("嘗試打開 YouTube 時發生錯誤", true);
+          showMessage(`嘗試打開 ${appName} 時發生錯誤`, true);
         }
       };
 
-      openApp1.addEventListener("click", main);
-      openApp2.addEventListener("click", main);
+      openYouTubeApp1.addEventListener("click", main);
+      openGoogleMapApp1.addEventListener("click", main);
+      openIgApp1.addEventListener("click", main);
 
       function showMessage(text, isError = false) {
         messageElement.textContent = text;
