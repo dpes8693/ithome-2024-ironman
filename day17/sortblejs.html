@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sortable List Demo</title>
+    <style>
+      .grid-square {
+        width: 150px;
+        height: 100px;
+        display: inline-block;
+        background-color: #fff;
+        border: solid 1px rgb(0, 0, 0, 0.2);
+        padding: 10px;
+        margin: 12px;
+      }
+    </style>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Sortable.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.3/Sortable.min.js"></script>
+  </head>
+  <body>
+    <h4>Card Example</h4>
+    <div class="container mt-4">
+      <!-- List with handle -->
+      <div id="listWithHandle" class="list-group">
+        <div
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <i class="bi bi-arrows-move me-2" style="cursor: move"></i>
+            Drag me by the handle
+          </div>
+          <span class="badge bg-primary rounded-pill">14</span>
+        </div>
+        <div
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <i class="bi bi-arrows-move me-2" style="cursor: move"></i>
+            You can also select text
+          </div>
+          <span class="badge bg-primary rounded-pill">2</span>
+        </div>
+        <div
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <i class="bi bi-arrows-move me-2" style="cursor: move"></i>
+            bootstrap@5.3.0
+          </div>
+          <span class="badge bg-primary rounded-pill">1</span>
+        </div>
+        <div
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <i class="bi bi-arrows-move me-2" style="cursor: move"></i>
+            bootstrap-icons@1.7.2
+          </div>
+          <span class="badge bg-primary rounded-pill">1</span>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <h4>Service Example</h4>
+    <div id="gridDemo" class="col">
+      <div class="grid-square">Item 1</div>
+      <div class="grid-square">Item 2</div>
+      <div class="grid-square">Item 3</div>
+      <div class="grid-square">Item 4</div>
+      <div class="grid-square">Item 5</div>
+      <div class="grid-square">Item 6</div>
+      <div class="grid-square">Item 7</div>
+      <div class="grid-square">Item 8</div>
+      <div class="grid-square">Item 9</div>
+      <div class="grid-square">Item 10</div>
+    </div>
+
+    <script>
+      // List with handle
+      Sortable.create(listWithHandle, {
+        handle: ".bi-arrows-move",
+        animation: 150,
+      });
+
+      // Grid demo
+      new Sortable(gridDemo, {
+        animation: 150,
+        ghostClass: "blue-background-class",
+      });
+    </script>
+  </body>
+</html>
