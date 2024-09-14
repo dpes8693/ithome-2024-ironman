@@ -27,7 +27,7 @@
 
 5. 監聽手機滑動方向 (ios 手機滑動 刪除)📱📗
 6. 網頁媒體撥放研究 瀏覽器會阻擋 mp3, mp4📗
-7. youtube-api 使用📗
+7. youtube-api 使用 📗
 8. 前端列印 print🔥📗
 9. 網頁逾時監聽 🔥📗
    前景 背景? (ig 播放影片)
@@ -39,22 +39,23 @@
 13. file-1 改名稱
 14. file-2 併發 上傳 等待上傳
     拖曳 BLOB
-15. 拖曳排序 🔥
+15. 拖曳排序 🔥 card
 
 16. 關閉網頁前提示 📗
 
-17. getBoundingClientRect🔥
+17. getBoundingClientRect🔥🔥
 
-18. pictureMap 台灣地圖 🔥
+18. pictureMap 台灣地圖
 19. 預覽 PDF
 20. 彈出小視窗 📗
 21. 機上盒網頁製作 📱
-22. open App by schema📱
+22. open App by schema📱📗
 
 23. barcode 二唯碼(barcode 39)📗
 24. 模仿 App bottom sheet📱
 25. iframe.contentWindow.scrollTo(0, 0);📗
 26. canvas.身分證水印 📱
+27. 用網頁開啟 youtube App 📱📗
 
 ===
 
@@ -68,9 +69,12 @@
   dayjs
 - autoSelect
   autoSelectOption
-- AbortController
+- AbortController🔥🔥
 
 ===
 
-- liff 應用-1 爬蟲
-- liff 應用-2 notify
+- liff 應用-1 爬蟲 🔥🔥🔥
+- liff 應用-2 notify 後端開發 🔥🔥🔥
+- liff 應用-3 部署 🔥🔥🔥
+
+心得
