@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bottom Sheet</title>
+    <title>Bottom Sheet Demo</title>
     <style>
       body,
       html {
         height: 100%;
         margin: 0;
-        font-family: Arial, sans-serif;
       }
       .container {
         display: flex;
@@ -50,13 +49,13 @@
   <body>
     <div class="container">
       <div class="top">
-        <h2>我叫做 Bottom Sheet</h2>
-        <h2>是手機很常見的設計</h2>
-        <p>請用手機嘗試拖曳中間的線。</p>
+        <p>請用手機開啟網頁，嘗試拖曳中間的線。</p>
       </div>
       <div class="divider"></div>
       <div class="bottom">
-        <button id="helfBtn">按鈕</button>
+        <button class="half-btn">🔼</button>
+        <h3>我叫做 Bottom Sheet</h3>
+        <h3>是手機App很常見的設計</h3>
         <p>請用手機嘗試拖曳中間的線。</p>
         <p>當我100%時只能透過按鈕控制</p>
         <p>當我50%時可以自由拖曳</p>
@@ -69,85 +68,111 @@
       const divider = document.querySelector(".divider");
       const topPane = document.querySelector(".top");
       const bottomPane = document.querySelector(".bottom");
+      const halfBtn = document.querySelector(".half-btn");
       let isDragging = false;
 
-      divider.addEventListener("mousedown", (e) => {
-        e.stopPropagation();
-        isDragging = true;
-        e.preventDefault();
-      });
+      const BottomSheet = {
+        ratio: 0.5,
+        getRatio() {
+          return this.ratio;
+        },
+        setRatio(value) {
+          this.ratio = value;
+        },
+        adjustRatio(inputRatio) {
+          // 限制比例
+          this.ratio = Math.max(0.001, Math.min(0.99, inputRatio));
+          const containerHeight = container.offsetHeight;
+          const topHeight = containerHeight * inputRatio;
+          const bottomHeight =
+            containerHeight - topHeight - divider.offsetHeight;
 
-      document.addEventListener("mousemove", (e) => {
-        if (!isDragging) return;
-        const containerRect = container.getBoundingClientRect();
-        const y = e.clientY - containerRect.top;
-        adjustRatio(y / containerRect.height);
-      });
+          topPane.style.flex = `0 0 ${topHeight}px`;
+          bottomPane.style.flex = `0 0 ${bottomHeight}px`;
+        },
+        toStaticRatio(type) {
+          switch (type) {
+            //下面 100%
+            case "full": {
+              this.adjustRatio(0);
+              this.ratio = 0;
+              // 變更線條顏色
+              divider.style.backgroundColor = "#e0e0e0";
+              // 變更按鈕文字
+              halfBtn.textContent = "🔽";
+              break;
+            }
+            //下面 50%
+            case "half": {
+              this.adjustRatio(0.5);
+              this.ratio = 0.5;
+              // 變更線條顏色
+              divider.style.backgroundColor = "#ccc";
+              // 變更按鈕文字
+              halfBtn.textContent = "🔼";
+              break;
+            }
+            //下面 30%
+            case "low": {
+              this.adjustRatio(0.7);
+              this.ratio = 0.7;
+              // 變更線條顏色
+              divider.style.backgroundColor = "#ccc";
+              // 變更按鈕文字
+              halfBtn.textContent = "🔼";
+              break;
+            }
+            default: {
+              break;
+            }
+          }
+        },
+      };
 
-      document.addEventListener("mouseup", () => {
-        isDragging = false;
-      });
-
-      function adjustRatio(ratio) {
-        ratio = Math.max(0.001, Math.min(0.99, ratio)); // 限制比例在 10% 到 90% 之间
-        const containerHeight = container.offsetHeight;
-        const topHeight = containerHeight * ratio;
-        const bottomHeight = containerHeight - topHeight - divider.offsetHeight;
-
-        topPane.style.flex = `0 0 ${topHeight}px`;
-        bottomPane.style.flex = `0 0 ${bottomHeight}px`;
-      }
-
-      // 移动设备触摸支持
+      // touch 事件綁定
       divider.addEventListener("touchstart", (e) => {
         e.stopPropagation();
         isDragging = true;
-        // e.preventDefault();
       });
+      // 綁在 document 提升體驗(範圍廣)
+      document.addEventListener("touchmove", handleTouchMove);
+      document.addEventListener("touchend", handleTouchEnd);
 
-      let ratio = 0.5;
-      document.addEventListener("touchmove", (e) => {
+      halfBtn.onclick = () => {
+        const mode = BottomSheet.getRatio() === 0 ? "half" : "full";
+        BottomSheet.toStaticRatio(mode);
+      };
+
+      function handleTouchMove(e) {
         e.stopPropagation();
-        if (!isDragging) return;
-        if (ratio === 0) {
+        if (!isDragging) {
+          return;
+        }
+        if (BottomSheet.getRatio() === 0) {
           return;
         }
         const containerRect = container.getBoundingClientRect();
-        // console.log("containerRect", containerRect);
         const touch = e.touches[0];
-        console.log("touches", e.touches, touch);
         const y = touch.clientY - containerRect.top;
-
-        ratio = y / containerRect.height;
-        console.log("ratio", ratio);
-        if (ratio >= 0.7) {
+        BottomSheet.setRatio(y / containerRect.height);
+        const currentRatio = BottomSheet.getRatio();
+        if (currentRatio >= 0.7) {
           return;
         }
-        adjustRatio(ratio);
-      });
+        BottomSheet.adjustRatio(currentRatio);
+      }
 
-      document.addEventListener("touchend", () => {
-        if (ratio >= 0.66) {
-          adjustRatio(0.7); //下面 30%
-          ratio = 0.7;
-        } else if (ratio >= 0.4 && ratio < 0.66) {
-          adjustRatio(0.5); //下面 50%
-          ratio = 0.5;
-        } else {
-          adjustRatio(0); //下面 100%
-          ratio = 0;
+      function handleTouchEnd(e) {
+        const currentRatio = BottomSheet.getRatio();
+        let mode = "full";
+        if (currentRatio >= 0.66) {
+          mode = "low";
+        } else if (currentRatio >= 0.4 && currentRatio < 0.66) {
+          mode = "half";
         }
+        BottomSheet.toStaticRatio(mode);
         isDragging = false;
-      });
-      helfBtn.onclick = () => {
-        if (ratio === 0) {
-          adjustRatio(0.5);
-          ratio = 0.5;
-        } else {
-          adjustRatio(0);
-          ratio = 0;
-        }
-      };
+      }
     </script>
   </body>
 </html>
