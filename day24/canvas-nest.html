@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CanvasNest</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+
+      #area-render {
+        /* position: fixed; */
+        height: 98.5%;
+        width: 99%;
+        border: dashed 5px #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="area-render"></div>
+    <script src="https://git.hust.cc/canvas-nest.js/dist/canvas-nest.js"></script>
+    <script>
+      const cn = new CanvasNest(document.getElementById("area-render"), {
+        count: 450,
+      });
+      console.log(cn);
+    </script>
+  </body>
+</html>
