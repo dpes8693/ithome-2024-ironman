@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=config=TeX-AMS_HTML"></script> -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+          },
+          TeX: {
+            extensions: ["AMSmath.js", "AMSsymbols.js"]
+          },
+          "HTML-CSS": {
+            availableFonts: ["TeX"],
+            linebreaks: { automatic: true },
+            scale: 90
+          },
+          SVG: {
+            linebreaks: { automatic: true }
+          },
+          messageStyle: "none"
+        });
+    </script>
+  </head>
+  <body>
+    <p id="mathjaxTest"></p>
+    <div class="examples">
+      <div
+        class="example tex"
+        data-expr="\displaystyle \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }"
+      ></div>
+      <div
+        class="example tex"
+        data-expr="\displaystyle \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)"
+      ></div>
+      <div
+        class="example tex"
+        data-expr="\displaystyle {1 +  \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots }= \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \quad\quad \text{for }\lvert q\rvert<1."
+      ></div>
+    </div>
+    <h6>https://www.mathjax.org/</h6>
+    <script>
+      console.log(document.readyState, Date.now());
+      function renderMathInElement() {
+        const mathjaxDOM = document.getElementById("mathjaxTest");
+        mathjaxDOM.textContent = "\\(c = \\pm\\sqrt{a^2 + b^2}\\)";
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, mathjaxDOM]);
+      }
+      window.addEventListener("load", function (event) {
+        renderMathInElement();
+
+        console.log(document.readyState, Date.now());
+        var tex = document.getElementsByClassName("tex");
+        Array.prototype.forEach.call(tex, function (el) {
+          el.textContent = "\\(" + el.getAttribute("data-expr") + "\\)";
+        });
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        console.log(document.readyState, Date.now());
+      });
+    </script>
+  </body>
+</html>
