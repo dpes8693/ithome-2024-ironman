@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>map</title>
+    <style>
+      .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90dvw;
+        height: 95dvh;
+        min-width: 900px;
+      }
+      iframe {
+        transform: scale(0.6); /* 將內容縮放至 50% */
+        transform-origin: center left; /* 以左上角為縮放原點 */
+        width: 100%; /* 寬度設為2倍來補償縮放後的大小 */
+        height: 160%; /* 高度設為2倍來補償縮放後的大小 */
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <p>請用電腦觀看，試著移動滑鼠到圖片上</p>
+    <div class="wrapper">
+      <br /><br /><br /><br /><br />
+      <iframe src="./picture-map.html" frameborder="0"></iframe>
+    </div>
+  </body>
+</html>
