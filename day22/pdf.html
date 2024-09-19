@@ -5,13 +5,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>object tag demo</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: black;
+      }
+      .wrapper {
+        height: 99dvh;
+        border: 2cap solid white;
+      }
+    </style>
   </head>
   <body>
-    <object
-      type="application/pdf"
-      data="https://interactive-examples.mdn.mozilla.net/media/examples/In-CC0.pdf"
-      width="100%"
-      height="400"
-    ></object>
+    <div class="wrapper">
+      <object
+        type="application/pdf"
+        data="https://interactive-examples.mdn.mozilla.net/media/examples/In-CC0.pdf"
+        width="100%"
+        height="100%"
+      ></object>
+    </div>
   </body>
 </html>
