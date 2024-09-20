@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latex in Web</title>
+    <head>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+        integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
+        crossorigin="anonymous"
+      />
+      <script
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+        integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg"
+        crossorigin="anonymous"
+      ></script>
+    </head>
+  </head>
+  <body>
+    <pre>
+以下是 3 個簡單的 LaTeX 語法範例：
+
+### 1. 酸鹼中和化學式
+要表示化學式，例如鹽酸（HCl）與氫氧化鈉（NaOH）的酸鹼中和反應，可以使用 `\rightarrow` 來顯示化學反應箭頭：
+
+```latex
+\text{HCl} + \text{NaOH} \rightarrow \text{NaCl} + \text{H}_2\text{O}
+```
+<div
+class="my-latex"
+data-expr="\text{HCl} + \text{NaOH} \rightarrow \text{NaCl} + \text{H}_2\text{O}"
+></div>
+### 2. 排列組合
+排列 `P(n, r)` 和組合 `C(n, r)` 可以用公式表示如下：
+
+排列：
+```latex
+P(n, r) = \frac{n!}{(n - r)!}
+```
+    <div
+    class="my-latex"
+    data-expr="P(n, r) = \frac{n!}{(n - r)!}"
+    ></div>
+組合：
+```latex
+C(n, r) = \binom{n}{r} = \frac{n!}{r!(n - r)!}
+```
+    <div
+    class="my-latex"
+    data-expr="C(n, r) = \binom{n}{r} = \frac{n!}{r!(n - r)!}"
+    ></div>
+### 3. 微積分 積分
+簡單的積分語法，例子：從 0 到 1 的定積分：
+
+```latex
+\int_0^1 x^2 \, dx = \frac{1}{3}
+```
+    <div
+    class="my-latex"
+    data-expr="\int_0^1 x^2 \, dx = \frac{1}{3}"
+    ></div>
+這些是基本的 LaTeX 語法範例，適用於化學反應式、排列組合和積分的表示。
+    </pre>
+    <script>
+      window.addEventListener("load", function (event) {
+        const tex = document.getElementsByClassName("my-latex");
+        [...tex].forEach((el) => {
+          // getAttribute("data-expr")
+          const expr = el.dataset.expr;
+          katex.render(expr, el);
+        });
+      });
+    </script>
+  </body>
+</html>
