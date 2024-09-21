@@ -42,6 +42,14 @@ katex 渲染比較快，故選它當作 demo
 
 ---
 
+## 語法
+
+```js
+katex.render("latex語法字串", DOM元素, 設定檔物件);
+```
+
+[設定檔文件在這邊](https://katex.org/docs/options)
+
 ## 成果
 
 [katex_demo](https://dpes8693.github.io/ithome-2024-ironman/day23/katex.html)
