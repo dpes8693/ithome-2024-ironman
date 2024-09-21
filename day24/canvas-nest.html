@@ -19,8 +19,7 @@
       #area-render {
         /* position: fixed; */
         height: 98.5%;
-        width: 99%;
-        border: dashed 5px #ccc;
+        width: 99dvw;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -28,12 +27,21 @@
     </style>
   </head>
   <body>
-    <div id="area-render"></div>
-    <script src="https://git.hust.cc/canvas-nest.js/dist/canvas-nest.js"></script>
+    <div id="area-render">
+      <h2>Hello, World!</h2>
+    </div>
+    <script src="https://git.hust.cc/canvas-nest.js/dist/canvas-nest.umd.js"></script>
     <script>
-      const cn = new CanvasNest(document.getElementById("area-render"), {
-        count: 450,
-      });
+      const config = {
+        color: "0,0,255",
+        pointColor: "0,0,255",
+        opacity: 1,
+        zIndex: -2,
+        // 不要超過 1000 =>很卡
+        count: 200,
+      };
+      const area = document.getElementById("area-render");
+      const cn = new CanvasNest(area, config);
       console.log(cn);
     </script>
   </body>
