@@ -81,7 +81,9 @@
 ===
 
 - 可以在前端改檔案名稱再上傳嗎?
-- 簡報提前下載處理
+
 - call api 排隊設計 queue
 - AbortController🔥🔥 中斷API
+
+- 簡報提前下載處理
 - call open ai api
