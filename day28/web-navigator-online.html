@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>web-navigator-online</title>
+    <style>
+      #status-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+      }
+      .online {
+        background-color: #4caf50;
+      }
+      .offline {
+        background-color: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="status-bar"></div>
+
+    <h3>監聽網路 online & offline 會出現一條bar</h3>
+    <pre>
+        這個範例類似 Youtube App 
+        <span style="color: #4caf50;">綠色</span>:有網路時出現(僅出現3秒)
+        <span style="color: #f44336;">紅色</span>:超過2秒沒網路時出現(一直出現)
+    </pre>
+
+    <script>
+      const statusBar = document.getElementById("status-bar");
+      let onlineTimer;
+      let offlineTimer;
+
+      function updateOnlineStatus() {
+        clearTimeout(offlineTimer);
+        clearTimeout(onlineTimer);
+        // Online
+        if (navigator.onLine) {
+          statusBar.classList.remove("offline");
+          statusBar.classList.add("online");
+          statusBar.style.opacity = "1";
+          onlineTimer = setTimeout(() => {
+            statusBar.style.opacity = "0";
+          }, 3000);
+          return;
+        }
+
+        // Offline
+        offlineTimer = setTimeout(() => {
+          statusBar.classList.remove("online");
+          statusBar.classList.add("offline");
+          statusBar.style.opacity = "1";
+        }, 2000);
+      }
+
+      window.addEventListener("online", updateOnlineStatus);
+      window.addEventListener("offline", updateOnlineStatus);
+
+      // 初始狀態檢查
+      updateOnlineStatus();
+    </script>
+  </body>
+</html>
